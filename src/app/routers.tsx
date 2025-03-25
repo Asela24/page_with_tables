@@ -42,4 +42,6 @@ export const routers = createBrowserRouter([
       </Suspense>
     ),
   },
-]);
+], {
+  basename: '/page_with_tables/',
+});
