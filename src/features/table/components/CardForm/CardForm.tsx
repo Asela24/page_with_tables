@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { TableItem } from "../../types/table";
 import { DEFAULT_TABLE_FORM_VALUES } from "../../utils/defaultTableFormValues";
 import { ControlledTextField } from "../../../shared/components/ControlledTextField/ControlledTextField";
-import { Box, Button, Modal, CircularProgress } from "@mui/material";
+import { Box, Button, Modal } from "@mui/material";
 import { ControlledDatePicker } from "../../../shared/components/ControlledDatePicker/ControlledDatePicker";
 import { useDispatch, useSelector } from "react-redux";
 import {
