@@ -42,7 +42,12 @@ export const CardForm = ({ info, type, onClose, open }: Props) => {
     selectIsItemLoading(state, info?.id)
   );
   const [cookies] = useCookies(["authToken"]);
-  const { control, handleSubmit, reset } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { isDirty },
+  } = useForm({
     defaultValues: info || DEFAULT_TABLE_FORM_VALUES,
     resolver: zodResolver(tableFormSchema),
   });
@@ -136,7 +141,7 @@ export const CardForm = ({ info, type, onClose, open }: Props) => {
             type="submit"
             variant="contained"
             sx={{ maxWidth: "150px" }}
-            disabled={isLoading}
+            disabled={isLoading || !isDirty}
             loading={isLoading}
           >
             Save

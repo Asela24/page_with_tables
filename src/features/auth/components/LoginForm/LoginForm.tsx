@@ -14,7 +14,7 @@ import { useTogglePasswordVisibility } from "../../hooks/useTogglePasswordVisibi
 export const LoginForm = () => {
   const { loading } = useSelector(selectAuthState);
   const dispatch = useDispatch<AppDispatch>();
-  const { control, handleSubmit } = useForm<FormFields>({
+  const { control, handleSubmit, formState: { isDirty } } = useForm<FormFields>({
     defaultValues: DEFAULT_VALUES,
     resolver: zodResolver(loginFormSchema),
     reValidateMode: "onSubmit",
@@ -23,9 +23,11 @@ export const LoginForm = () => {
   const { showPassword, togglePasswordVisibility } =
     useTogglePasswordVisibility();
 
+
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     dispatch(loginUser(data));
   };
+
   return (
     <Box
       component="form"
@@ -65,6 +67,7 @@ export const LoginForm = () => {
         color="primary"
         sx={{ mt: 2 }}
         loading={loading}
+        disabled={isDirty}
       >
         Login
       </Button>
