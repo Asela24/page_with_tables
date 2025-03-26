@@ -9,7 +9,7 @@ export const Header = () => {
 
   const handleAuthAction = () => {
     if (cookies.authToken) {
-      removeCookie("authToken");
+      removeCookie("authToken", { path: '/' });
     } else {
       navigate("/auth");
     }

@@ -67,7 +67,7 @@ export const LoginForm = () => {
         color="primary"
         sx={{ mt: 2 }}
         loading={loading}
-        disabled={isDirty}
+        disabled={!isDirty}
       >
         Login
       </Button>
