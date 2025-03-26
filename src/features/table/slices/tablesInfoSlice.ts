@@ -77,7 +77,7 @@ export const addTableItem = createAsyncThunk(
       token,
       data,
       onSuccess,
-    }: { token: string; data: TableItem; onSuccess?: () => void },
+    }: { token: string; data: Omit<TableItem, "id">; onSuccess?: () => void },
     { dispatch, rejectWithValue }
   ) => {
     const response = await apiRequestWrapper({
@@ -106,7 +106,7 @@ export const updateTableItem = createAsyncThunk(
       url: `${HOST}/ru/data/v3/testmethods/docs/userdocs/set/${id}`,
       options: getRequestConfig(token, "POST", data),
       onError: rejectWithValue,
-      onSuccess: onSuccess
+      onSuccess: onSuccess,
     });
     dispatch(fetchTableContent(token));
     return { id, data: response };
@@ -129,7 +129,9 @@ const tableSlice = createSlice({
       })
       .addCase(fetchTableContent.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.data = action.payload;
+        state.data = action.payload.sort((a: TableItem, b: TableItem) =>
+          a?.id?.localeCompare(b?.id || "")
+        );
       })
       .addCase(fetchTableContent.rejected, (state, action) => {
         state.isLoading = false;

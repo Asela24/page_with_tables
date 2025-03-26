@@ -1,9 +1,7 @@
-import { TableItem } from "../types/table";
-
-export const getRequestConfig = (
+export const getRequestConfig = <T>(
   token: string,
   method: string = "GET",
-  data?: TableItem
+  data?: T
 ) => ({
   method,
   headers: {

@@ -1,5 +1,5 @@
 export type TableItem = {
-    id?: string;
+    id: string;
     companySigDate: string;
     companySignatureName: string;
     documentName: string;

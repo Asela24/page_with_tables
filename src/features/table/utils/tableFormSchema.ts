@@ -27,7 +27,7 @@ export const dateSchema = z
   .transform(toUtcISOString);
 
 const FIELD_SCHEMAS = {
-  id: z.string().optional(),
+  id: z.string(),
   companySigDate: dateSchema,
   companySignatureName: z
     .string()

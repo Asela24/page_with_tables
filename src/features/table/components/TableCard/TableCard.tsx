@@ -24,7 +24,9 @@ import { CardFormModal } from "../CardFormModal/CardFormModal";
 export const TableCard = (details: TableItemType) => {
   const [cookies] = useCookies(["authToken"]);
   const dispatch = useDispatch<AppDispatch>();
-  const formattedDetails = Object.entries(details);
+  const formattedDetails = Object.entries(details).filter(
+    ([key]) => key !== "id"
+  );
   const { error, isLoading: isAllDataLoading } = useSelector(selectTableInfo);
   const isLoading =
     useSelector((state: RootState) => selectIsItemLoading(state, details.id)) ||
