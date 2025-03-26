@@ -13,3 +13,4 @@ npm - 10.2.3
 node - v20.10.0
 
 ## Deploy
+https://asela24.github.io/page_with_tables/
