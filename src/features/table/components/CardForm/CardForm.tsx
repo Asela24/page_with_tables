@@ -18,22 +18,14 @@ import IconButton from "@mui/material/IconButton";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { tableFormSchema } from "../../utils/tableFormSchema";
 import { CustomBox } from "../../../shared/components/CustomBox/CustomBox";
+import { TableActionType } from "../../types/tableActionType";
 
-type CreateProps = {
+type Props = {
+  onClose: () => void;
+  open: boolean;
   info?: TableItem;
-  type: "create";
-  onClose: () => void;
-  open: boolean;
+  type: TableActionType;
 };
-
-type UpdateProps = {
-  info: TableItem;
-  type: "update";
-  onClose: () => void;
-  open: boolean;
-};
-
-type Props = CreateProps | UpdateProps;
 
 export const CardForm = ({ info, type, onClose, open }: Props) => {
   const dispatch = useDispatch<AppDispatch>();

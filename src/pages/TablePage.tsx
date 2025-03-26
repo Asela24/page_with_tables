@@ -35,7 +35,7 @@ const TablePage = () => {
       }}
     >
       {error && <AlertNotification message={error} severity="error" />}
-      <CardFormModal buttonLabel="Add table" />
+      <CardFormModal buttonLabel="Add table" type="create" />
       <Box
         sx={{
           display: "flex",
@@ -45,7 +45,7 @@ const TablePage = () => {
           alignItems: isLoading ? "center" : "normal",
         }}
       >
-        {isLoading ? (
+        {isLoading && !data.length ? (
           <CircularProgress
             sx={{
               marginTop: "100px",

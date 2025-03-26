@@ -94,13 +94,19 @@ export const addTableItem = createAsyncThunk(
 export const updateTableItem = createAsyncThunk(
   "table/updateItem",
   async (
-    { id, token, data }: { id: string; token: string; data: TableItem },
+    {
+      id,
+      token,
+      data,
+      onSuccess,
+    }: { id: string; token: string; data: TableItem; onSuccess: () => void },
     { dispatch, rejectWithValue }
   ) => {
     const response = await apiRequestWrapper({
       url: `${HOST}/ru/data/v3/testmethods/docs/userdocs/set/${id}`,
       options: getRequestConfig(token, "POST", data),
       onError: rejectWithValue,
+      onSuccess: onSuccess
     });
     dispatch(fetchTableContent(token));
     return { id, data: response };

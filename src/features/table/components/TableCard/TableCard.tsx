@@ -25,10 +25,10 @@ export const TableCard = (details: TableItemType) => {
   const [cookies] = useCookies(["authToken"]);
   const dispatch = useDispatch<AppDispatch>();
   const formattedDetails = Object.entries(details);
-  const { error } = useSelector(selectTableInfo);
-  const isLoading = useSelector((state: RootState) =>
-    selectIsItemLoading(state, details.id)
-  );
+  const { error, isLoading: isAllDataLoading } = useSelector(selectTableInfo);
+  const isLoading =
+    useSelector((state: RootState) => selectIsItemLoading(state, details.id)) ||
+    isAllDataLoading;
 
   const handleItemRemove = () => {
     if (cookies.authToken && details?.id) {
@@ -58,7 +58,12 @@ export const TableCard = (details: TableItemType) => {
         >
           Remove
         </Button>
-        <CardFormModal buttonLabel="Update" item={details} />
+        <CardFormModal
+          buttonLabel="Update"
+          info={details}
+          type="update"
+          loading={isLoading}
+        />
       </CardActions>
       <CardContent>
         <Table>
