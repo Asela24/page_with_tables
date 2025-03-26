@@ -11,7 +11,6 @@ import { TableItem as TableItemType } from "../../types/table";
 import { TableRow } from "../TableRow/TableRow";
 import { Delete } from "@mui/icons-material";
 import {
-  removeTableItem,
   selectIsItemLoading,
   selectTableInfo,
 } from "../../slices/tablesInfoSlice";
@@ -20,6 +19,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../../store/store";
 import { useSelector } from "react-redux";
 import { CardFormModal } from "../CardFormModal/CardFormModal";
+import { removeTableItem } from "../../slices/asyncThunkActions";
 
 export const TableCard = (details: TableItemType) => {
   const [cookies] = useCookies(["authToken"]);

@@ -1,11 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { TableItem } from "../types/table";
 import { RootState } from "../../../store/store";
-import { HOST } from "../../../utils/consts";
-import { apiRequestWrapper } from "../../shared/utils/apiRequestWrapper";
-import { getRequestConfig } from "../utils/getRequestConfig";
+import { handleItemRejected, handleItemPending, handleItemFulfilled } from "../utils/actionHelpers";
+import { fetchTableContent, removeTableItem, addTableItem, updateTableItem } from "./asyncThunkActions";
 
-interface TableInfoState {
+export interface TableInfoState {
   isLoading: boolean;
   loadingItemIds: string[];
   data: TableItem[];
@@ -20,98 +19,6 @@ const initialState: TableInfoState = {
   data: [],
   error: null,
 };
-
-const handleItemPending = (state: TableInfoState, id: string) => {
-  state.loadingItemIds.push(id);
-  state.error = null;
-};
-
-const handleItemFulfilled = (state: TableInfoState, id: string) => {
-  state.loadingItemIds = state.loadingItemIds.filter((itemId) => itemId !== id);
-};
-
-const handleItemRejected = (
-  state: TableInfoState,
-  action: { error: { message?: string } },
-  id?: string
-) => {
-  if (id) {
-    state.loadingItemIds = state.loadingItemIds.filter(
-      (itemId) => itemId !== id
-    );
-  }
-  state.error = action.error.message || "An error occurred";
-};
-
-export const fetchTableContent = createAsyncThunk(
-  "table/fetchContent",
-  async (token: string, { rejectWithValue }) => {
-    return apiRequestWrapper({
-      url: `${HOST}/ru/data/v3/testmethods/docs/userdocs/get`,
-      options: getRequestConfig(token),
-      onError: rejectWithValue,
-    });
-  }
-);
-
-export const removeTableItem = createAsyncThunk(
-  "table/removeItem",
-  async (
-    { id, token }: { id: string; token: string },
-    { dispatch, rejectWithValue }
-  ) => {
-    await apiRequestWrapper({
-      url: `${HOST}/ru/data/v3/testmethods/docs/userdocs/delete/${id}`,
-      options: getRequestConfig(token, "DELETE"),
-      onError: rejectWithValue,
-      onSuccess: () => dispatch(fetchTableContent(token)),
-    });
-    return id;
-  }
-);
-
-export const addTableItem = createAsyncThunk(
-  "table/addItem",
-  async (
-    {
-      token,
-      data,
-      onSuccess,
-    }: { token: string; data: Omit<TableItem, "id">; onSuccess?: () => void },
-    { dispatch, rejectWithValue }
-  ) => {
-    const response = await apiRequestWrapper({
-      url: `${HOST}/ru/data/v3/testmethods/docs/userdocs/create`,
-      options: getRequestConfig(token, "POST", data),
-      onError: rejectWithValue,
-    });
-    onSuccess?.();
-    dispatch(fetchTableContent(token));
-    return response;
-  }
-);
-
-export const updateTableItem = createAsyncThunk(
-  "table/updateItem",
-  async (
-    {
-      id,
-      token,
-      data,
-      onSuccess,
-    }: { id: string; token: string; data: TableItem; onSuccess: () => void },
-    { dispatch, rejectWithValue }
-  ) => {
-    const response = await apiRequestWrapper({
-      url: `${HOST}/ru/data/v3/testmethods/docs/userdocs/set/${id}`,
-      options: getRequestConfig(token, "POST", data),
-      onError: rejectWithValue,
-      onSuccess: onSuccess,
-    });
-    dispatch(fetchTableContent(token));
-    return { id, data: response };
-  }
-);
 
 const tableSlice = createSlice({
   name: "table",

@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import {
-  fetchTableContent,
   selectTableInfo,
 } from "../features/table/slices/tablesInfoSlice";
 import { AlertNotification } from "../features/shared/components/AlertNotification/AlertNotification";
@@ -12,6 +11,7 @@ import { TableCard } from "../features/table/components/TableCard/TableCard";
 import { Box, CircularProgress } from "@mui/material";
 import { CardFormModal } from "../features/table/components/CardFormModal/CardFormModal";
 import { NoCardsMessage } from "../features/table/components/NoCardsMessage/NoCardsMessage";
+import { fetchTableContent } from "../features/table/slices/asyncThunkActions";
 
 const TablePage = () => {
   const [cookies] = useCookies<string>(["authToken"]);

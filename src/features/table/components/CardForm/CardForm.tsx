@@ -6,10 +6,8 @@ import { Box, Button, Modal } from "@mui/material";
 import { ControlledDatePicker } from "../../../shared/components/ControlledDatePicker/ControlledDatePicker";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addTableItem,
   selectIsItemLoading,
   selectTableInfo,
-  updateTableItem,
 } from "../../slices/tablesInfoSlice";
 import { AppDispatch, RootState } from "../../../../store/store";
 import { useCookies } from "react-cookie";
@@ -19,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { tableFormSchema } from "../../utils/tableFormSchema";
 import { CustomBox } from "../../../shared/components/CustomBox/CustomBox";
 import { TableActionType } from "../../types/tableActionType";
+import { addTableItem, updateTableItem } from "../../slices/asyncThunkActions";
 
 type Props = {
   onClose: () => void;
