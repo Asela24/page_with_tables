@@ -5,4 +5,13 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   base: '/page_with_tables/',
   plugins: [react()],
+  build: {
+    rollupOptions: {
+      input: {
+        404: './404.html',
+        main: './index.html'
+      }
+    }
+  }
+
 });
